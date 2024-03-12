@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "639804230233",
+    "project_id": "collectables-aace8",
+    "storage_bucket": "collectables-aace8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639804230233:android:ba792d12d09d3508d3bf48",
+        "android_client_info": {
+          "package_name": "com.example.collectables"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639804230233-c09nfjuv897qj28be7nrrvt12o9simc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX4Dac33cSGCl65jhw7scred_GrAsqFKM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639804230233-c09nfjuv897qj28be7nrrvt12o9simc3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
