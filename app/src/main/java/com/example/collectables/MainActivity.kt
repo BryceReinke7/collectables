@@ -183,10 +183,18 @@ fun OpeningPage(modifier: Modifier = Modifier) {
 
 
 
-@Preview(showBackground = true)
+@Preview()
 @Composable
 fun HomePreview() {
     CollectablesTheme {
+        OpeningPage()
+    }
+}
+
+@Preview
+@Composable
+fun HomePreviewDark() {
+    CollectablesTheme(darkTheme = true) {
         OpeningPage()
     }
 }
