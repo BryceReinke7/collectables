@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.collectables.ui.theme.CollectablesTheme
 
 
 @Composable
@@ -24,8 +25,17 @@ fun SignUp(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
 
         ) {
-
+        LogInSignIn()
         }
     }
 }
+/*
+@Preview()
+@Composable
+fun HomePreview() {
+    CollectablesTheme {
+        SignUp()
+    }
+}
 
+ */

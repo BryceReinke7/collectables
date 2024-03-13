@@ -9,6 +9,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +40,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -61,6 +63,21 @@ class MainActivity : ComponentActivity() {
 
     }
 }
+
+enum class CollectablesScreen() {
+    Home,
+    SignUp,
+    LogIn,
+    MainPage,
+    CreateCollection,
+    Templates,
+    CreateTemplate,
+    OnlineTemplate,
+    ViewCollection,
+    ViewItem
+}
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -94,7 +111,7 @@ fun LogInSignIn(modifier: Modifier = Modifier) {
 
     ) {
         //Log in button
-        Card(modifier = Modifier) {
+        Card(modifier = Modifier.clickable {  }) {
             Box(
                 modifier = Modifier
                     .padding(20.dp)
@@ -112,7 +129,7 @@ fun LogInSignIn(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.size(16.dp))
         //Sign Up button
-        Card(modifier = Modifier) {
+        Card(modifier = Modifier.clickable {  }) {
             Box(
                 modifier = Modifier
                     .padding(20.dp)
@@ -137,7 +154,7 @@ fun OpeningPage(modifier: Modifier = Modifier) {
         topBar = {
             CollectTopBar()
         }
-    ) { thisdoesnothingbutneedstobehere ->
+    ) { innerPadding ->
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
@@ -146,6 +163,14 @@ fun OpeningPage(modifier: Modifier = Modifier) {
 
         ) {
             LogInSignIn()
+        }
+
+        NavHost(
+            navController = navController,
+            startDestination = ,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+
         }
     }
 }
@@ -157,7 +182,7 @@ fun OpeningPage(modifier: Modifier = Modifier) {
 
 
 
-/*
+
 @Preview()
 @Composable
 fun HomePreview() {
@@ -174,4 +199,3 @@ fun HomePreviewDark() {
     }
 }
 
-*/
