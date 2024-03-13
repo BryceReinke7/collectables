@@ -157,7 +157,7 @@ fun OpeningPage(modifier: Modifier = Modifier) {
 
 
 
-
+/*
 @Preview()
 @Composable
 fun HomePreview() {
@@ -174,3 +174,4 @@ fun HomePreviewDark() {
     }
 }
 
+*/
