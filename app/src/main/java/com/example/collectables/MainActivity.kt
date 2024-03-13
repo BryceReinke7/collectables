@@ -152,32 +152,7 @@ fun OpeningPage(modifier: Modifier = Modifier) {
 
 
 
-/*Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-    ) {
-        //Logo area
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                //.border(border = BorderStroke(width = 5.dp, Color.Red))
-                .padding(top = 24.dp, bottom = 24.dp, start = 10.dp, end = 10.dp)
-                .fillMaxWidth()
-        ) {
-            Image(
-                painter = painterResource(R.drawable.cheek),
 
-                contentDescription = null,
-                modifier = Modifier
-                    .size(75.dp)
-            )
-            Text(
-                text = "Collectables",
-                style = MaterialTheme.typography.displayLarge,
-                modifier = Modifier
-                //color = Color.Green
-            )
-        }*/
 
 
 
