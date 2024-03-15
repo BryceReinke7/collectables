@@ -1,15 +1,8 @@
 package com.example.collectables
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,31 +14,24 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.collectables.ui.theme.CollectablesTheme
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,36 +47,20 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavHost(navController = navController, startDestination = Screen.Home.route) {
-                        composable(route = Screen.Home.route) { }
-                        composable(route = "SignUp") { SignUp() }
+                    NavHost(navController = navController, startDestination = Routes.Home.route) {
+                        composable(Routes.Home.route) { OpeningPage(navController = navController) }
+                        composable(Routes.SignUp.route) { SignUp() }
                     }
-                    OpeningPage()
+
                 }
             }
         }
     }
 }
 
-sealed class Screen(val route: String) {
-    object Home : Screen("Home")
-    object  SignUp : Screen("SignUp")
-}
 
 
 
-enum class CollectablesScreen() {
-    Home,
-    SignUp,
-    LogIn,
-    MainPage,
-    CreateCollection,
-    Templates,
-    CreateTemplate,
-    OnlineTemplate,
-    ViewCollection,
-    ViewItem
-}
 
 
 
@@ -159,9 +129,10 @@ fun LogInSignIn(modifier: Modifier = Modifier) {
     }
 }
 
+
 @Composable
 //Sets up opening page
-fun OpeningPage(modifier: Modifier = Modifier) {
+fun OpeningPage(navController: NavHostController, modifier: Modifier = Modifier) {
     Scaffold(
         topBar = {
             CollectTopBar()
@@ -174,7 +145,45 @@ fun OpeningPage(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
 
         ) {
-            LogInSignIn()
+            Column (
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxHeight()
+            ) {
+                //Log in button
+                Box(
+                    modifier = Modifier
+                        .padding(20.dp)
+                ) {
+                    Button(onClick = { }) {
+                        Text(
+                            text = "Log In",
+                            style = MaterialTheme.typography.displayMedium,
+                            modifier = Modifier
+                                .padding(10.dp)
+                        )
+                    }
+                }
+
+
+                Spacer(modifier = Modifier.size(16.dp))
+                //Sign Up button
+                Box(
+                    modifier = Modifier
+                        .padding(20.dp)
+                ) {
+                    Button(onClick = {navController.navigate(Routes.SignUp.route) }) {
+                        Text(
+                            text = "Sign Up",
+                            style = MaterialTheme.typography.displayMedium,
+                            modifier = Modifier
+                                .padding(10.dp)
+
+                        )
+                    }
+                }
+            }
         }
 
 
@@ -193,7 +202,7 @@ fun OpeningPage(modifier: Modifier = Modifier) {
 @Composable
 fun HomePreview() {
     CollectablesTheme {
-        OpeningPage()
+        OpeningPage(rememberNavController())
     }
 }
 
@@ -201,7 +210,7 @@ fun HomePreview() {
 @Composable
 fun HomePreviewDark() {
     CollectablesTheme(darkTheme = true) {
-        OpeningPage()
+        OpeningPage(rememberNavController())
     }
 }
 
