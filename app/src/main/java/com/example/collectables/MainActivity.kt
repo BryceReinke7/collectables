@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -41,6 +42,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -48,21 +51,33 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         setContent {
+
+            val navController = rememberNavController()
+
             CollectablesTheme {
                  //A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    NavHost(navController = navController, startDestination = Screen.Home.route) {
+                        composable(route = Screen.Home.route) { }
+                        composable(route = "SignUp") { SignUp() }
+                    }
                     OpeningPage()
                 }
             }
         }
-
     }
 }
+
+sealed class Screen(val route: String) {
+    object Home : Screen("Home")
+    object  SignUp : Screen("SignUp")
+}
+
+
 
 enum class CollectablesScreen() {
     Home,
@@ -81,6 +96,7 @@ enum class CollectablesScreen() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+//Top bar of app
 fun CollectTopBar(modifier: Modifier = Modifier) {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -103,21 +119,17 @@ fun CollectTopBar(modifier: Modifier = Modifier) {
 @Composable
 fun LogInSignIn(modifier: Modifier = Modifier) {
     Column (
-
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
-
     ) {
         //Log in button
-        Card(modifier = Modifier.clickable {  }) {
-            Box(
-                modifier = Modifier
-                    .padding(20.dp)
-                //.background(Color.Green)
-                //.border(border = BorderStroke(width = 2.dp, Color.Red))
-            ) {
+        Box(
+            modifier = Modifier
+                .padding(20.dp)
+        ) {
+            Button(onClick = { }) {
                 Text(
                     text = "Log In",
                     style = MaterialTheme.typography.displayMedium,
@@ -127,15 +139,14 @@ fun LogInSignIn(modifier: Modifier = Modifier) {
             }
         }
 
+
         Spacer(modifier = Modifier.size(16.dp))
         //Sign Up button
-        Card(modifier = Modifier.clickable {  }) {
-            Box(
-                modifier = Modifier
-                    .padding(20.dp)
-                //.background(Color.Green)
-                //.border(border = BorderStroke(width = 2.dp, Color.Red))
-            ) {
+        Box(
+            modifier = Modifier
+                .padding(20.dp)
+        ) {
+            Button(onClick = { }) {
                 Text(
                     text = "Sign Up",
                     style = MaterialTheme.typography.displayMedium,
@@ -149,6 +160,7 @@ fun LogInSignIn(modifier: Modifier = Modifier) {
 }
 
 @Composable
+//Sets up opening page
 fun OpeningPage(modifier: Modifier = Modifier) {
     Scaffold(
         topBar = {
@@ -165,13 +177,7 @@ fun OpeningPage(modifier: Modifier = Modifier) {
             LogInSignIn()
         }
 
-        NavHost(
-            navController = navController,
-            startDestination = ,
-            modifier = Modifier.padding(innerPadding)
-        ) {
 
-        }
     }
 }
 
@@ -199,3 +205,10 @@ fun HomePreviewDark() {
     }
 }
 
+@Preview
+@Composable
+fun ScondPreview() {
+    CollectablesTheme {
+        SignUp()
+    }
+}
