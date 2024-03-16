@@ -21,14 +21,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.collectables.ui.theme.CollectablesTheme
-
 
 @Composable
-fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
+fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
     Scaffold(
         topBar = {
             CollectTopBar()
@@ -53,7 +50,7 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                 )
                 {
                     Text(
-                        text = "Sign Up",
+                        text = "Log In",
                         style = MaterialTheme.typography.displayLarge,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
@@ -62,18 +59,18 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                     TextField(
                         value = email,
                         onValueChange = {email = it},
-                        label = { Text("Email")}
+                        label = { Text("Email") }
                     )
                     Spacer(modifier = Modifier.size(16.dp))
                     TextField(
                         value = password,
                         onValueChange = {password = it},
-                        label = { Text("Password")}
+                        label = { Text("Password") }
                     )
                     Spacer(modifier = Modifier.size(16.dp))
-                    Button(onClick = { navController.navigate(Routes.LogIn.route) }) {
+                    Button(onClick = { navController.navigate(Routes.Collections.route) }) {
                         Text(
-                            text = "Create Account",
+                            text = "Log In",
                             style = MaterialTheme.typography.displayMedium,
                             modifier = Modifier
                                 .padding(10.dp)
@@ -86,7 +83,7 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun EnterSignUpInfo(modifier: Modifier = Modifier) {
+fun EnterLoginInfo(modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     Column(
@@ -99,7 +96,7 @@ fun EnterSignUpInfo(modifier: Modifier = Modifier) {
         )
         {
             Text(
-                text = "Sign Up",
+                text = "Log In",
                 style = MaterialTheme.typography.displayLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -108,18 +105,18 @@ fun EnterSignUpInfo(modifier: Modifier = Modifier) {
             TextField(
                 value = email,
                 onValueChange = {email = it},
-                label = { Text("Email")}
+                label = { Text("Email") }
             )
             Spacer(modifier = Modifier.size(16.dp))
             TextField(
                 value = password,
                 onValueChange = {password = it},
-                label = { Text("Password")}
+                label = { Text("Password") }
             )
             Spacer(modifier = Modifier.size(16.dp))
             Button(onClick = { }) {
                 Text(
-                    text = "Create Account",
+                    text = "Log In",
                     style = MaterialTheme.typography.displayMedium,
                     modifier = Modifier
                         .padding(10.dp)

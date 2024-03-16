@@ -28,7 +28,7 @@ val Typography = Typography(
     ),
     displaySmall = TextStyle(
         fontFamily = ChakraPetch,
-        fontWeight = FontWeight.Bold,
-        fontSize = 14.sp
+        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp
     ),
 )

@@ -49,7 +49,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(navController = navController, startDestination = Routes.Home.route) {
                         composable(Routes.Home.route) { OpeningPage(navController = navController) }
-                        composable(Routes.SignUp.route) { SignUp() }
+                        composable(Routes.SignUp.route) { SignUp(navController = navController) }
+                        composable(Routes.LogIn.route) { LogIn(navController = navController) }
+                        composable(Routes.Collections.route) { CollectView() }
                     }
 
                 }
@@ -73,62 +75,14 @@ fun CollectTopBar(modifier: Modifier = Modifier) {
             containerColor = MaterialTheme.colorScheme.primary,
         ),
         title = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Collectables",
-                    style = MaterialTheme.typography.displayLarge
-                )
-            }
+            Text(
+                text = "Collectables",
+                style = MaterialTheme.typography.displayLarge
+            )
+
         }
     )
 }
-
-
-@Composable
-fun LogInSignIn(modifier: Modifier = Modifier) {
-    Column (
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxHeight()
-    ) {
-        //Log in button
-        Box(
-            modifier = Modifier
-                .padding(20.dp)
-        ) {
-            Button(onClick = { }) {
-                Text(
-                    text = "Log In",
-                    style = MaterialTheme.typography.displayMedium,
-                    modifier = Modifier
-                        .padding(10.dp)
-                )
-            }
-        }
-
-
-        Spacer(modifier = Modifier.size(16.dp))
-        //Sign Up button
-        Box(
-            modifier = Modifier
-                .padding(20.dp)
-        ) {
-            Button(onClick = { }) {
-                Text(
-                    text = "Sign Up",
-                    style = MaterialTheme.typography.displayMedium,
-                    modifier = Modifier
-                        .padding(10.dp)
-
-                )
-            }
-        }
-    }
-}
-
 
 @Composable
 //Sets up opening page
@@ -156,7 +110,7 @@ fun OpeningPage(navController: NavHostController, modifier: Modifier = Modifier)
                     modifier = Modifier
                         .padding(20.dp)
                 ) {
-                    Button(onClick = { }) {
+                    Button(onClick = {navController.navigate(Routes.LogIn.route)}) {
                         Text(
                             text = "Log In",
                             style = MaterialTheme.typography.displayMedium,
@@ -165,8 +119,6 @@ fun OpeningPage(navController: NavHostController, modifier: Modifier = Modifier)
                         )
                     }
                 }
-
-
                 Spacer(modifier = Modifier.size(16.dp))
                 //Sign Up button
                 Box(
@@ -196,8 +148,6 @@ fun OpeningPage(navController: NavHostController, modifier: Modifier = Modifier)
 
 
 
-
-
 @Preview()
 @Composable
 fun HomePreview() {
@@ -206,18 +156,5 @@ fun HomePreview() {
     }
 }
 
-@Preview
-@Composable
-fun HomePreviewDark() {
-    CollectablesTheme(darkTheme = true) {
-        OpeningPage(rememberNavController())
-    }
-}
 
-@Preview
-@Composable
-fun ScondPreview() {
-    CollectablesTheme {
-        SignUp()
-    }
-}
+
