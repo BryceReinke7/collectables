@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -20,6 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -60,13 +63,18 @@ fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
                     TextField(
                         value = email,
                         onValueChange = {email = it},
-                        label = { Text("Email") }
+                        label = { Text("Email") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        singleLine = true
                     )
                     Spacer(modifier = Modifier.size(16.dp))
                     TextField(
                         value = password,
                         onValueChange = {password = it},
-                        label = { Text("Password") }
+                        label = { Text("Password") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        visualTransformation = PasswordVisualTransformation(),
+                        singleLine = true
                     )
                     Spacer(modifier = Modifier.size(16.dp))
                     Button(onClick = { navController.navigate(Routes.Collections.route) }) {
@@ -78,50 +86,6 @@ fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
                         )
                     }
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun EnterLoginInfo(modifier: Modifier = Modifier) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    Column(
-    ) {
-        Column (
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxHeight()
-        )
-        {
-            Text(
-                text = "Log In",
-                style = MaterialTheme.typography.displayLarge,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-            )
-            Spacer(modifier = Modifier.size(100.dp))
-            TextField(
-                value = email,
-                onValueChange = {email = it},
-                label = { Text("Email") }
-            )
-            Spacer(modifier = Modifier.size(16.dp))
-            TextField(
-                value = password,
-                onValueChange = {password = it},
-                label = { Text("Password") }
-            )
-            Spacer(modifier = Modifier.size(16.dp))
-            Button(onClick = { }) {
-                Text(
-                    text = "Log In",
-                    style = MaterialTheme.typography.displayMedium,
-                    modifier = Modifier
-                        .padding(10.dp)
-                )
             }
         }
     }
