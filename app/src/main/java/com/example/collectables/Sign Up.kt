@@ -1,5 +1,6 @@
 package com.example.collectables
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,8 +27,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ComponentActivity
 import androidx.navigation.NavHostController
 import com.example.collectables.ui.theme.CollectablesTheme
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+
 
 
 @Composable
@@ -37,6 +42,7 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
             CollectTopBar()
         }
     ) { innerPadding ->
+        val auth = Firebase.auth
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
@@ -79,7 +85,13 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                         singleLine = true
                     )
                     Spacer(modifier = Modifier.size(16.dp))
-                    Button(onClick = { navController.navigate(Routes.LogIn.route) }) {
+                    Button(onClick = {
+                        auth.createUserWithEmailAndPassword(
+                            email.trim(),
+                            password.trim()
+
+                        )
+                    }) {
                         Text(
                             text = "Create Account",
                             style = MaterialTheme.typography.displayMedium,
@@ -87,51 +99,18 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                                 .padding(10.dp)
                         )
                     }
+                    Spacer(modifier = Modifier.size(16.dp))
+                    Button(onClick = {
+                        navController.navigate(Routes.LogIn.route)
+                    }) {
+                        Text(
+                            text = "Go to Login Page",
+                            style = MaterialTheme.typography.displayMedium,
+                            modifier = Modifier
+                                .padding(10.dp)
+                        )
+                    }
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun EnterSignUpInfo(modifier: Modifier = Modifier) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    Column(
-    ) {
-        Column (
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxHeight()
-        )
-        {
-            Text(
-                text = "Sign Up",
-                style = MaterialTheme.typography.displayLarge,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-            )
-            Spacer(modifier = Modifier.size(100.dp))
-            TextField(
-                value = email,
-                onValueChange = {email = it},
-                label = { Text("Email")}
-            )
-            Spacer(modifier = Modifier.size(16.dp))
-            TextField(
-                value = password,
-                onValueChange = {password = it},
-                label = { Text("Password")}
-            )
-            Spacer(modifier = Modifier.size(16.dp))
-            Button(onClick = { }) {
-                Text(
-                    text = "Create Account",
-                    style = MaterialTheme.typography.displayMedium,
-                    modifier = Modifier
-                        .padding(10.dp)
-                )
             }
         }
     }
