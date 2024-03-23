@@ -96,7 +96,7 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                     TextField(
                         value = password,
                         onValueChange = {password = it},
-                        label = { Text("Password")},
+                        label = { Text("Password (at least 6 characters)")},
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         visualTransformation = PasswordVisualTransformation(),
                         singleLine = true
