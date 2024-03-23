@@ -1,5 +1,6 @@
 package com.example.collectables
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+
+
+fun loginUser(email: String, password: String) {
+    auth.signInWithEmailAndPassword(email, password)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Login successful
+                val user = auth.currentUser
+            } else {
+                // Login failed
+                Log.w("Login", "signInWithEmail:failure", task.exception)
+            }
+        }
+}
+
+
 
 @Composable
 fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -77,9 +94,18 @@ fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
                         singleLine = true
                     )
                     Spacer(modifier = Modifier.size(16.dp))
-                    Button(onClick = { navController.navigate(Routes.Collections.route) }) {
+                    Button(onClick = { loginUser(email, password) }) {
                         Text(
                             text = "Log In",
+                            style = MaterialTheme.typography.displayMedium,
+                            modifier = Modifier
+                                .padding(10.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.size(16.dp))
+                    Button(onClick = {navController.navigate(Routes.Collections.route)}) {
+                        Text(
+                            text = "View my collections",
                             style = MaterialTheme.typography.displayMedium,
                             modifier = Modifier
                                 .padding(10.dp)

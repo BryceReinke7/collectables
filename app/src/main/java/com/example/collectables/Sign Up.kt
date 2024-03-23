@@ -31,8 +31,24 @@ import androidx.core.app.ComponentActivity
 import androidx.navigation.NavHostController
 import com.example.collectables.ui.theme.CollectablesTheme
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
+
+val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+fun registerUser(email: String, password: String) {
+    auth.createUserWithEmailAndPassword(email, password)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Registration successful
+                val user = auth.currentUser
+            } else {
+                // Registration failed
+                Log.w("Registration", "createUserWithEmail:failure", task.exception)
+            }
+        }
+}
 
 
 @Composable
@@ -42,7 +58,7 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
             CollectTopBar()
         }
     ) { innerPadding ->
-        val auth = Firebase.auth
+        //val auth = Firebase.auth
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
@@ -75,6 +91,7 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         singleLine = true
                     )
+
                     Spacer(modifier = Modifier.size(16.dp))
                     TextField(
                         value = password,
@@ -86,11 +103,8 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                     )
                     Spacer(modifier = Modifier.size(16.dp))
                     Button(onClick = {
-                        auth.createUserWithEmailAndPassword(
-                            email.trim(),
-                            password.trim()
-
-                        )
+                        registerUser(email, password)
+                        
                     }) {
                         Text(
                             text = "Create Account",
