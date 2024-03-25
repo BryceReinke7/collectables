@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -36,12 +37,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.collectables.ui.theme.CollectablesTheme
 
 
 @Composable
-fun CollectView(modifier: Modifier = Modifier) {
+fun CollectView(navController: NavHostController, modifier: Modifier = Modifier) {
     Scaffold(
         topBar = {
             CollectTopBar()
@@ -60,7 +62,7 @@ fun CollectView(modifier: Modifier = Modifier) {
                         .weight(3f)
                 ){
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = {navController.navigate(Routes.CreateCollection.route) },
                         modifier = Modifier.height(64.dp)
                     ) {
                         Text(
@@ -90,7 +92,7 @@ fun CollectView(modifier: Modifier = Modifier) {
                         .weight(3f)
                 ){
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = {  },
                         modifier = Modifier.height(64.dp)
                     ) {
                         Text(
@@ -103,7 +105,7 @@ fun CollectView(modifier: Modifier = Modifier) {
                 }
             }
             Spacer(modifier = Modifier.size(10.dp))
-            Divider(color = MaterialTheme.colorScheme.primary, thickness = 1.dp)
+            HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
             Row(
                 modifier = Modifier
@@ -117,7 +119,7 @@ fun CollectView(modifier: Modifier = Modifier) {
                     label = { Text("Search") }
                 )
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {  },
                     colors = ButtonDefaults.buttonColors( MaterialTheme.colorScheme.secondary),
                     modifier = Modifier
                         .height(64.dp)
@@ -132,7 +134,7 @@ fun CollectView(modifier: Modifier = Modifier) {
                 }
             }
             Spacer(modifier = Modifier.size(10.dp))
-            Divider(color = MaterialTheme.colorScheme.primary, thickness = 1.dp)
+            HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
         }
     }
@@ -141,7 +143,7 @@ fun CollectView(modifier: Modifier = Modifier) {
 @Composable
 fun TestPreview() {
     CollectablesTheme {
-        CollectView()
+        CollectView(rememberNavController())
     }
 }
 

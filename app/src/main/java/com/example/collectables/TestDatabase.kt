@@ -1,5 +1,13 @@
 package com.example.collectables
 
-class TestDatabase() {
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
-}
+val collections = listOf(
+    "Coins",
+    "Records",
+    "Trading Cards",
+    "Stamps",
+    "Keychains",
+    "Books"
+)
