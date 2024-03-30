@@ -43,12 +43,13 @@ import com.google.firebase.firestore.firestore
 
 val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-fun registerUser(email: String, password: String) {
+fun registerUser(navController: NavHostController, email: String, password: String) {
     auth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Registration successful
                 val user = auth.currentUser
+                navController.navigate(Routes.LogIn.route)
             } else {
                 // Registration failed
                 Log.w("Registration", "createUserWithEmail:failure", task.exception)
@@ -91,6 +92,7 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
         ) {
             var email by remember { mutableStateOf("") }
             var password by remember { mutableStateOf("") }
+
             Column(
             ) {
                 Column (
@@ -126,8 +128,13 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                     )
                     Spacer(modifier = Modifier.size(16.dp))
                     Button(onClick = {
-                        registerUser(email, password)
-                        
+                        when (password) {
+                            "" -> registerUser(navController = navController, " ", " ")
+                            else -> {
+                                registerUser(navController = navController, email, password)
+                            }
+
+                        }
                     }) {
                         Text(
                             text = "Create Account",
@@ -137,16 +144,6 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                         )
                     }
                     Spacer(modifier = Modifier.size(16.dp))
-                    Button(onClick = {
-                        navController.navigate(Routes.LogIn.route)
-                    }) {
-                        Text(
-                            text = "Go to Login Page",
-                            style = MaterialTheme.typography.displayMedium,
-                            modifier = Modifier
-                                .padding(10.dp)
-                        )
-                    }
                     Button(onClick = {
                         Test()
                     }) {

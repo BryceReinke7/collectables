@@ -1,5 +1,6 @@
 package com.example.collectables
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -36,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.collectables.ui.theme.CollectablesTheme
-
+//zzaf@5cb33de
 
 @Composable
 fun CollectView(navController: NavHostController, modifier: Modifier = Modifier) {

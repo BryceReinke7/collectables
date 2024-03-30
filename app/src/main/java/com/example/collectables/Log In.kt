@@ -30,20 +30,30 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 
 
-fun loginUser(email: String, password: String) {
+fun loginUser(navController: NavHostController, email: String, password: String) {
     auth.signInWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Login successful
                 val user = auth.currentUser
+                Log.d("Login", "signInWithEmail:success")
+
+                navController.navigate(Routes.Collections.route)
             } else {
                 // Login failed
                 Log.w("Login", "signInWithEmail:failure", task.exception)
             }
         }
 }
+var userName = ""
 
+fun assignUserName(user: String) {
+    userName = user
+}
 
+fun accessUserName(): String {
+    return userName
+}
 
 @Composable
 fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -94,7 +104,15 @@ fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
                         singleLine = true
                     )
                     Spacer(modifier = Modifier.size(16.dp))
-                    Button(onClick = { loginUser(email, password) }) {
+                    Button(onClick = {
+                        when (password) {
+                            "" -> loginUser(navController = navController, " ", " ")
+                            else -> {
+                                loginUser(navController = navController, email, password)
+                                assignUserName(email)
+                            }
+                        }
+                    }) {
                         Text(
                             text = "Log In",
                             style = MaterialTheme.typography.displayMedium,
@@ -103,14 +121,6 @@ fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
                         )
                     }
                     Spacer(modifier = Modifier.size(16.dp))
-                    Button(onClick = {navController.navigate(Routes.Collections.route)}) {
-                        Text(
-                            text = "View my collections",
-                            style = MaterialTheme.typography.displayMedium,
-                            modifier = Modifier
-                                .padding(10.dp)
-                        )
-                    }
                 }
             }
         }
