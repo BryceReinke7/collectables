@@ -1,6 +1,8 @@
 package com.example.collectables
 
+import android.content.ContentValues.TAG
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +35,10 @@ import com.example.collectables.ui.theme.CollectablesTheme
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
+
 
 
 val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -49,6 +55,23 @@ fun registerUser(email: String, password: String) {
             }
         }
 }
+
+
+val db = Firebase.firestore
+
+val city = hashMapOf(
+    "name" to "Los Angeles",
+    "state" to "CA",
+    "country" to "USA",
+)
+
+fun Test() {
+    db.collection("cities").document("LA")
+        .set(city)
+        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+        .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+}
+
 
 
 @Composable
@@ -119,6 +142,16 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                     }) {
                         Text(
                             text = "Go to Login Page",
+                            style = MaterialTheme.typography.displayMedium,
+                            modifier = Modifier
+                                .padding(10.dp)
+                        )
+                    }
+                    Button(onClick = {
+                        Test()
+                    }) {
+                        Text(
+                            text = "TEST",
                             style = MaterialTheme.typography.displayMedium,
                             modifier = Modifier
                                 .padding(10.dp)

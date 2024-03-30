@@ -131,7 +131,7 @@ fun CreateCollectionView(modifier: Modifier = Modifier) {
                         }
                         Spacer(modifier = Modifier.size(25.dp))
                         Button(
-                            onClick = { fieldCount -- },
+                            onClick = { if (fieldCount > 1) fieldCount -- },
                             colors = ButtonDefaults.buttonColors( MaterialTheme.colorScheme.secondary),
                             modifier = Modifier.weight(1f)
                         ) {

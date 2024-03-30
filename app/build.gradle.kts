@@ -81,6 +81,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
     implementation ("com.google.firebase:firebase-firestore-ktx")
+    implementation ("com.google.firebase:firebase-database:20.3.1")
 
     // Dagger-Hilt
     implementation ("com.google.dagger:hilt-android:2.47")
