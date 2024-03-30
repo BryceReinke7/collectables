@@ -99,7 +99,19 @@ fun CreateCollectionView(modifier: Modifier = Modifier) {
                 }
             }
             Spacer(modifier = Modifier.size(10.dp))
-
+            Button(
+                onClick = {  },
+                colors = ButtonDefaults.buttonColors( MaterialTheme.colorScheme.secondary),
+                modifier = Modifier
+            ) {
+                Text(
+                    text = "Add Image",
+                    style = MaterialTheme.typography.displaySmall,
+                    modifier = Modifier,
+                    textAlign = TextAlign.Center
+                )
+            }
+            Spacer(modifier = Modifier.size(10.dp))
             repeat(fieldCount) {
                 InputFields()
             }
