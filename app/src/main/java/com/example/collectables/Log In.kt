@@ -124,6 +124,7 @@ fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
                 }
             }
         }
+        Spacer(modifier = Modifier.padding(innerPadding))
     }
 }
 

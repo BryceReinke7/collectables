@@ -140,8 +140,7 @@ fun OpeningPage(navController: NavHostController, modifier: Modifier = Modifier)
                 }
             }
         }
-
-
+        Spacer(modifier = Modifier.padding(innerPadding))
     }
 }
 

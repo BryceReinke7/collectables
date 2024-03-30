@@ -157,6 +157,7 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                 }
             }
         }
+        Spacer(modifier = Modifier.padding(innerPadding))
     }
 }
 
