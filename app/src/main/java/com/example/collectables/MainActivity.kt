@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.SignUp.route) { SignUp(navController = navController) }
                         composable(Routes.LogIn.route) { LogIn(navController = navController) }
                         composable(Routes.Collections.route) { CollectView(navController = navController) }
-                        composable(Routes.CreateCollection.route) { CreateCollectionView() }
+                        composable(Routes.CreateCollection.route) { CreateCollectionView(navController = navController) }
                     }
 
                 }

@@ -58,20 +58,6 @@ fun registerUser(navController: NavHostController, email: String, password: Stri
 }
 
 
-val db = Firebase.firestore
-
-val city = hashMapOf(
-    "name" to "Los Angeles",
-    "state" to "CA",
-    "country" to "USA",
-)
-
-fun Test() {
-    db.collection("cities").document("LA")
-        .set(city)
-        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-        .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
-}
 
 
 
@@ -144,16 +130,6 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
                         )
                     }
                     Spacer(modifier = Modifier.size(16.dp))
-                    Button(onClick = {
-                        Test()
-                    }) {
-                        Text(
-                            text = "TEST",
-                            style = MaterialTheme.typography.displayMedium,
-                            modifier = Modifier
-                                .padding(10.dp)
-                        )
-                    }
                 }
             }
         }
