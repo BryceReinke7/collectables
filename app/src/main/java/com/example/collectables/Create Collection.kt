@@ -34,42 +34,16 @@ import com.example.collectables.ui.theme.CollectablesTheme
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlin.reflect.KMutableProperty0
+
 
 //var mainFieldCount = 1
 
 @Composable
 fun CreateCollectionView(navController: NavHostController, modifier: Modifier = Modifier) {
-    var fieldCount by remember { mutableIntStateOf(1) }
-
-    /*
-    //Input fields is separate function so it can multiply
-    @Composable
-    fun InputFields(
-
-        modifier: Modifier = Modifier
-    ) {
-
-        var fieldName by remember { mutableStateOf("") }
-
-        Column {
-            Row {
-                OutlinedTextField(
-                    value = fieldName,
-                    onValueChange = {fieldName = it}
-                )
-        }
-            Spacer(modifier = Modifier.size(10.dp))
-        }
-    }
-
-     */
-
     Scaffold(
         topBar = {
             CollectTopBar()
         }
-
     ) { innerPadding ->
         val db = Firebase.firestore
 
@@ -104,8 +78,6 @@ fun CreateCollectionView(navController: NavHostController, modifier: Modifier = 
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                 ){
-
-
                     OutlinedTextField(
                         value = name,
                         onValueChange = {name = it},
@@ -128,31 +100,32 @@ fun CreateCollectionView(navController: NavHostController, modifier: Modifier = 
                     textAlign = TextAlign.Center
                 )
             }
+
             Spacer(modifier = Modifier.size(10.dp))
-            /*
-            repeat(fieldCount) {
-                InputFields()
-            }
-            */
             CustomizableInputFields(
                 navController = navController,
                 numberOfFields = numberOfFields,
                 onSave = { values ->
                     savedValues = values
-                    val userName = accessUserName()
+                    val userId = accessUserName() // Assuming you have a function to retrieve the current user's ID
                     val collectionName = name
-                    saveToFirestore(db, userName, collectionName, values)
+                    saveToFirestore(
+                        db = db,
+                        userId = userId,
+                        collectionName = collectionName,
+                        values = values,
+                        onSuccess = {
+                            // Handle success, such as showing a toast or navigating to another screen
+                            Log.d("TAG", "Data saved successfully")
+                        },
+                        onFailure = { e ->
+                            // Handle failure, such as showing an error message
+                            Log.e("TAG", "Failed to save data", e)
+                        }
+                    )
                 }
             )
 
-
-
-
-
-
-
-
-            //End
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
@@ -240,73 +213,67 @@ fun CustomizableInputFields(
 }
 
 //Also from chaptgpt modified by me
+fun saveCollectionToFirestore(
+    db: FirebaseFirestore,
+    userId: String,
+    collectionName: String,
+    onSuccess: () -> Unit,
+    onFailure: (Exception) -> Unit
+) {
+    val collectionData = hashMapOf(
+        "collectionName" to collectionName
+        // You can add more fields as needed
+    )
+
+    db.collection("users")
+        .document(userId)
+        .collection("collections")
+        .add(collectionData)
+        .addOnSuccessListener { documentReference ->
+            Log.d("TAG", "Collection document added with ID: ${documentReference.id}")
+            onSuccess()
+        }
+        .addOnFailureListener { e ->
+            Log.w("TAG", "Error adding collection document", e)
+            onFailure(e)
+        }
+}
+
 fun saveToFirestore(
     db: FirebaseFirestore,
-    userName: String,
+    userId: String,
     collectionName: String,
-    values: List<String>
+    values: List<String>,
+    onSuccess: () -> Unit,
+    onFailure: (Exception) -> Unit
 ) {
     if (values.isEmpty() || values.all { it.isEmpty() }) {
         Log.w("TAG", "No data to save to Firestore")
         return
     }
 
+    // Saving data under collection rules document
     val data = hashMapOf<String, Any>()
     values.forEachIndexed { index, value ->
         data["Field$index"] = value
     }
 
     db.collection("users")
-        .document(userName)
-        .collection(collectionName) // Create a collection under the user document
-        .document("collection_rules") // Create a document under the collection with a fixed name "collection_rules"
-        .set(data) // Set the data under the "collection_rules" document
+        .document(userId)
+        .collection(collectionName)
+        .document("collection_rules")
+        .set(data)
         .addOnSuccessListener {
-            Log.d("TAG", "DocumentSnapshot successfully written with ID: $collectionName")
+            Log.d("TAG", "DocumentSnapshot successfully written with ID: collection_rules")
+            // Once the collection rules document is saved, save the collection name
+            saveCollectionToFirestore(db, userId, collectionName, onSuccess, onFailure)
         }
         .addOnFailureListener { e ->
-            Log.w("TAG", "Error adding document", e)
+            Log.w("TAG", "Error adding collection rules document", e)
+            onFailure(e)
         }
 }
 
-
-
-
-
-
-/*
-@Composable
-fun InputFields(
-
-    modifier: Modifier = Modifier
-) {
-
-    var fieldName by remember { mutableStateOf("") }
-
-    Row {
-        //var field by remember { mutableStateOf("") }
-
-        OutlinedTextField(
-            value = fieldName,
-            onValueChange = {fieldName = it}
-        )
-        Button(
-            onClick = {  },
-            colors = ButtonDefaults.buttonColors( MaterialTheme.colorScheme.secondary),
-            modifier = Modifier
-        ) {
-            Text(
-                text = "Add another field",
-                style = MaterialTheme.typography.displaySmall,
-                modifier = Modifier,
-                textAlign = TextAlign.Center
-            )
-        }
-        Spacer(modifier = Modifier.size(10.dp))
-    }
-}
-
-*/
 
 
 

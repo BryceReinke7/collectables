@@ -1,8 +1,10 @@
 package com.example.collectables
 
+import android.graphics.Color.parseColor
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +26,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.collectables.ui.theme.CollectablesTheme
 import androidx.compose.ui.unit.dp
@@ -68,21 +72,23 @@ class MainActivity : ComponentActivity() {
 
 
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 //Top bar of app
 fun CollectTopBar(modifier: Modifier = Modifier) {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = MaterialTheme.colorScheme.surfaceTint,
         ),
         title = {
-            Text(
-                text = "Collectables",
-                style = MaterialTheme.typography.displayLarge
-            )
 
+            Image(
+                //Icon from FreePik.com made by Vitaly Gorbachev
+                painter = painterResource(id = R.drawable.name_crop),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(300.dp)
+            )
         }
     )
 }

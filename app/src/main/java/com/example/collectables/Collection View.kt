@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -23,6 +24,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,7 +40,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.collectables.ui.theme.CollectablesTheme
-//zzaf@5cb33de
+import com.google.firebase.appcheck.internal.util.Logger.TAG
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.delay
+
 
 @Composable
 fun CollectView(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -47,6 +56,8 @@ fun CollectView(navController: NavHostController, modifier: Modifier = Modifier)
         }
 
     ) { innerPadding ->
+
+        //val db = Firebase.firestore
 
         Column(modifier = Modifier.padding(innerPadding)) {
             Spacer(modifier = Modifier.size(10.dp))
@@ -134,14 +145,97 @@ fun CollectView(navController: NavHostController, modifier: Modifier = Modifier)
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
             //Put collections here
-            CollectionCard()
-            CollectionCard()
+            DisplayCollectionNames(navController = navController)
         }
     }
 }
+//ChatGPT modified by me
+// Function to fetch collection names from Firestore
+fun getCollectionNamesFromFirestore(
+    db: FirebaseFirestore,
+    userId: String,
+    onSuccess: (List<String>) -> Unit,
+    onFailure: (Exception) -> Unit
+) {
+    db.collection("users")
+        .document(userId)
+        .collection("collections")
+        .get()
+        .addOnSuccessListener { querySnapshot ->
+            val collectionNames = querySnapshot.documents.map { it.getString("collectionName")!! }
+            onSuccess(collectionNames)
+        }
+        .addOnFailureListener { e ->
+            onFailure(e)
+        }
+}
+//ChatGPT modified by me
+@Composable
+fun DisplayCollectionNames(navController: NavHostController) {
+    val db = Firebase.firestore
+    val userId = accessUserName() // Assuming you have a function to retrieve the current user's ID
+
+    // State to hold the collection names
+    var collectionNames by remember { mutableStateOf<List<String>>(emptyList()) }
+
+    // Function to fetch collection names from Firestore
+    fun fetchCollectionNames() {
+        getCollectionNamesFromFirestore(
+            db = db,
+            userId = userId,
+            onSuccess = { names ->
+                collectionNames = names
+            },
+            onFailure = { e ->
+                Log.e("TAG", "Failed to fetch collection names", e)
+            }
+        )
+    }
+
+    // Fetch collection names from Firestore when the component is composed
+    //key1 is set to userID so if the user changes
+    DisposableEffect(key1 = userId) {
+        fetchCollectionNames()
+        onDispose { }
+    }
+
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
+
+        // Display collection names on UI cards
+        collectionNames.forEach { collectionName ->
+            //CollectionCard(name = collectionName)
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                onClick = {
+                    // Handle card click, navigate to collection details or perform other actions
+                    navController.navigate("collectionDetails/$collectionName")
+                }
+            ) {
+                Text(
+                    text = collectionName,
+                    style = MaterialTheme.typography.displayMedium,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }         
+
+        }
+    }
+    // Delay and refresh mechanism
+    LaunchedEffect(Unit) {
+        delay(5000) // Adjust the delay duration as needed
+        fetchCollectionNames()
+    }
+}
+
+
 
 @Composable
-fun CollectionCard(modifier: Modifier = Modifier) {
+fun CollectionCard(name: String, modifier: Modifier = Modifier) {
     Surface(
         color = MaterialTheme.colorScheme.primary,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary),
@@ -162,7 +256,7 @@ fun CollectionCard(modifier: Modifier = Modifier) {
             }
             Box(modifier = modifier) {
                 Text(
-                    text = "Name",
+                    text = name,
                     modifier = Modifier
                         .padding(8.dp)
                 )
