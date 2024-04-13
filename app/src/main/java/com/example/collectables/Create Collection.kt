@@ -188,7 +188,7 @@ fun CustomizableInputFields(
                     textValue = newText
                     textValues.getOrNull(index)?.let { textValues[index] = newText } ?: run { textValues.add(newText) }
                 },
-                //label = { Text("Field $index") }
+                label = { Text("Field $index") }
             )
             Spacer(Modifier.height(8.dp))
         }

@@ -227,7 +227,7 @@ fun DisplayCollectionNames(navController: NavHostController) {
     }
     // Delay and refresh mechanism
     LaunchedEffect(Unit) {
-        delay(5000) // Adjust the delay duration as needed
+        delay(4000) // Adjust the delay duration as needed
         fetchCollectionNames()
     }
 }
