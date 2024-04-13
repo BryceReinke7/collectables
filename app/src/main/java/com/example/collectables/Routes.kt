@@ -6,4 +6,6 @@ sealed class Routes (val route: String) {
     object LogIn : Routes("login")
     object Collections : Routes("collect")
     object CreateCollection : Routes("createcollect")
+    object ItemView : Routes("itemview")
+    object CreateItem : Routes("createitem")
 }

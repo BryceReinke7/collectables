@@ -36,7 +36,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-//var mainFieldCount = 1
 
 @Composable
 fun CreateCollectionView(navController: NavHostController, modifier: Modifier = Modifier) {
