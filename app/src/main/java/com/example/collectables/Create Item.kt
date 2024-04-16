@@ -19,6 +19,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,7 +39,7 @@ import com.google.firebase.ktx.Firebase
 
 
 
-//UI for page
+// UI for page
 @Composable
 fun CreateItemView(navController: NavHostController, modifier: Modifier = Modifier) {
     Scaffold(
@@ -71,70 +72,76 @@ fun CreateItemView(navController: NavHostController, modifier: Modifier = Modifi
 
         //for input fields
         var name by remember { mutableStateOf("") }
-        var fields by remember { mutableStateOf("")}
+        val fieldValues = remember { mutableStateListOf<String>() }
 
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(innerPadding)
-            ) {
-                Spacer(modifier = Modifier.size(10.dp))
-                Row(modifier = Modifier) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(text = "New Item", style = MaterialTheme.typography.displayLarge)
-                        Spacer(modifier = Modifier.size(10.dp))
-                        HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
-                    }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            Spacer(modifier = Modifier.size(10.dp))
+            Row(modifier = Modifier) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = "New Item", style = MaterialTheme.typography.displayLarge)
+                    Spacer(modifier = Modifier.size(10.dp))
+                    HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
                 }
-                Spacer(modifier = Modifier.size(10.dp))
-                Row(modifier = Modifier) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        OutlinedTextField(
-                            value = name,
-                            onValueChange = { name = it },
-                            label = { Text("Item Name") }
-                        )
-                        Spacer(modifier = Modifier.size(10.dp))
-                        HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
-                    }
-                }
-                Spacer(modifier = Modifier.size(10.dp))
-                Button(
-                    onClick = { Log.d("TAG", "TESTING $collectionRules") },
-                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
-                    modifier = Modifier
-                ) {
-                    Text(
-                        text = "Add Image",
-                        style = MaterialTheme.typography.displaySmall,
-                        textAlign = TextAlign.Center
-                    )
-                }
-                Spacer(modifier = Modifier.size(10.dp))
-                // Display collection rules
-                collectionRules.forEach { rule ->
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            Row(modifier = Modifier) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     OutlinedTextField(
-                        value = fields,
-                        onValueChange = { fields = it },
-                        label = { Text(rule) }
+                        value = name,
+                        onValueChange = { name = it },
+                        label = { Text("Item Name") }
                     )
                     Spacer(modifier = Modifier.size(10.dp))
+                    HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
                 }
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            Button(
+                onClick = { Log.d("TAG", "TESTING $collectionRules") },
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
+                modifier = Modifier
+            ) {
+                Text(
+                    text = "Add Image",
+                    style = MaterialTheme.typography.displaySmall,
+                    textAlign = TextAlign.Center
+                )
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            // Display collection rules
+            collectionRules.forEachIndexed { index, rule ->
+                OutlinedTextField(
+                    value = fieldValues.getOrNull(index) ?: "",
+                    onValueChange = { newValue ->
+                        fieldValues.getOrNull(index)?.let { fieldValues[index] = newValue } ?: run {
+                            fieldValues.add(newValue)
+                        }
+                    },
+                    label = { Text(rule) }
+                )
+                Spacer(modifier = Modifier.size(10.dp))
+            }
 
-                Button(
-                    onClick = { /* Handle save button click */ },
-                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
-                    modifier = Modifier
-                ) {
-                    Text(
-                        text = "Save",
-                        style = MaterialTheme.typography.displaySmall,
-                        textAlign = TextAlign.Center
-                    )
-                }
+            Button(
+                onClick = { /* Handle save button click */ },
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
+                modifier = Modifier
+            ) {
+                Text(
+                    text = "Save",
+                    style = MaterialTheme.typography.displaySmall,
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }
+}
+
+
 
 data class CollectionRules(
     val rules: List<String>
