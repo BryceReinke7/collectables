@@ -40,7 +40,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
 
-
+//set up user registration
 val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
 fun registerUser(navController: NavHostController, email: String, password: String) {
@@ -60,7 +60,7 @@ fun registerUser(navController: NavHostController, email: String, password: Stri
 
 
 
-
+//UI for sign up page
 @Composable
 fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
     Scaffold(
@@ -68,7 +68,6 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
             CollectTopBar()
         }
     ) { innerPadding ->
-        //val auth = Firebase.auth
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier

@@ -127,7 +127,24 @@ fun CreateItemView(navController: NavHostController, modifier: Modifier = Modifi
             }
 
             Button(
-                onClick = { /* Handle save button click */ },
+                onClick = {
+                    // Call the saveItemToFirestore function
+                    saveItemToFirestore(
+                        db = db,
+                        userId = userId,
+                        collectionName = collectionName,
+                        itemName = name,
+                        fieldValues = fieldValues,
+                        onSuccess = {
+                            // Handle success, e.g., navigate to a different screen
+                            Log.d("TAG", "Item saved successfully")
+                        },
+                        onFailure = { e ->
+                            // Handle failure, e.g., show an error message
+                            Log.e("TAG", "Failed to save item", e)
+                        }
+                    )
+                },
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
                 modifier = Modifier
             ) {
@@ -139,15 +156,6 @@ fun CreateItemView(navController: NavHostController, modifier: Modifier = Modifi
             }
         }
     }
-}
-
-
-
-data class CollectionRules(
-    val rules: List<String>
-) {
-    // Add a no-argument constructor. Needs to be here or app crashes but does nothing
-    constructor() : this(emptyList())
 }
 
 //Grabs data from firestore
@@ -177,6 +185,40 @@ fun getCollectionRulesFromFirestore(
         }
 }
 
+// Function to save item data to Firestore
+fun saveItemToFirestore(
+    db: FirebaseFirestore,
+    userId: String,
+    collectionName: String,
+    itemName: String,
+    fieldValues: List<String>,
+    onSuccess: () -> Unit,
+    onFailure: (Exception) -> Unit
+) {
+    // Create a map to hold the item data
+    val itemData = hashMapOf(
+        "name" to itemName
+    )
+
+    // Add the field values to the item data
+    for ((index, value) in fieldValues.withIndex()) {
+        itemData["field${index + 1}"] = value
+    }
+
+    // Add the item data to Firestore
+    db.collection("users")
+        .document(userId)
+        .collection(collectionName)
+        .add(itemData)
+        .addOnSuccessListener { documentReference ->
+            Log.d("TAG", "Item document added with ID: ${documentReference.id}")
+            onSuccess()
+        }
+        .addOnFailureListener { e ->
+            Log.w("TAG", "Error adding item document", e)
+            onFailure(e)
+        }
+}
 
 
 

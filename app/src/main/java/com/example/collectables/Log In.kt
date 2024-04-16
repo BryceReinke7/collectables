@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 
-
+//Function for logging in
 fun loginUser(navController: NavHostController, email: String, password: String) {
     auth.signInWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
@@ -45,6 +45,7 @@ fun loginUser(navController: NavHostController, email: String, password: String)
             }
         }
 }
+//These next three functions are used throughout the app for seeing who is currently logged in
 var userName = ""
 
 fun assignUserName(user: String) {
@@ -55,6 +56,7 @@ fun accessUserName(): String {
     return userName
 }
 
+//UI for login page
 @Composable
 fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
     Scaffold(

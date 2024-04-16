@@ -30,6 +30,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.collectables.ui.theme.CollectablesTheme
 
+//UI for view of items
 @Composable
 fun ItemView(navController: NavHostController, modifier: Modifier = Modifier) {
     Scaffold(
@@ -134,6 +135,7 @@ fun ItemView(navController: NavHostController, modifier: Modifier = Modifier) {
     }
 }
 
+//Previews
 @Composable
 fun TestPreviewItem() {
     CollectablesTheme {

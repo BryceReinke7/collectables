@@ -36,7 +36,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-
+//UI for view of collections
 @Composable
 fun CreateCollectionView(navController: NavHostController, modifier: Modifier = Modifier) {
     Scaffold(
@@ -45,9 +45,11 @@ fun CreateCollectionView(navController: NavHostController, modifier: Modifier = 
         }
     ) { innerPadding ->
         val db = Firebase.firestore
-
+        //number of input fields
         var numberOfFields by remember { mutableStateOf(1) }
+        //what gets saved into firestore
         var savedValues by remember { mutableStateOf<List<String>>(emptyList()) }
+        //variable for input field
         var name by remember { mutableStateOf("") }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -113,7 +115,6 @@ fun CreateCollectionView(navController: NavHostController, modifier: Modifier = 
                         collectionName = collectionName,
                         values = values,
                         onSuccess = {
-
                             Log.d("TAG", "Data saved successfully")
                         },
                         onFailure = { e ->
@@ -165,6 +166,7 @@ fun CreateCollectionView(navController: NavHostController, modifier: Modifier = 
 }
 
 //This code is from chatgpt modified by me
+//This function iterates through the number of input fields are displays them accordingly
 @Composable
 fun CustomizableInputFields(
     navController: NavHostController,
@@ -210,6 +212,7 @@ fun CustomizableInputFields(
 }
 
 //Also from chaptgpt modified by me
+//Sets up save for collection to firestore
 fun saveCollectionToFirestore(
     db: FirebaseFirestore,
     userId: String,
@@ -219,7 +222,6 @@ fun saveCollectionToFirestore(
 ) {
     val collectionData = hashMapOf(
         "collectionName" to collectionName
-        // You can add more fields as needed
     )
 
     db.collection("users")
@@ -236,6 +238,7 @@ fun saveCollectionToFirestore(
         }
 }
 
+//calls on last function to save input data to firestore to create collection
 fun saveToFirestore(
     db: FirebaseFirestore,
     userId: String,
@@ -249,7 +252,7 @@ fun saveToFirestore(
         return
     }
 
-    // Convert the list of input values to an array
+    // Convert the list of input values to an array for ordering purposes
     val data = hashMapOf(
         "fields" to values
     )
@@ -261,7 +264,7 @@ fun saveToFirestore(
         .set(data)
         .addOnSuccessListener {
             Log.d("TAG", "DocumentSnapshot successfully written with ID: collection_rules")
-            // Once the collection rules document is saved, save the collection name
+            // Once the collection rules document is saved now save collection name
             saveCollectionToFirestore(db, userId, collectionName, onSuccess, onFailure)
         }
         .addOnFailureListener { e ->
@@ -272,7 +275,7 @@ fun saveToFirestore(
 
 
 
-
+//previews
 
 @Composable
 fun TestPreviewTwo() {

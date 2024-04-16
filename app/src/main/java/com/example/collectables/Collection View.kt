@@ -50,6 +50,8 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.delay
 
+
+//These three functions are used throughout the app to determine name of current collection
 var collectionName = ""
 
 fun assignCollectionName(name: String) {
@@ -60,6 +62,7 @@ fun accessCollectionName(): String {
     return collectionName
 }
 
+//UI for view of all collections a user has
 @Composable
 fun CollectView(navController: NavHostController, modifier: Modifier = Modifier) {
     Scaffold(
@@ -184,6 +187,7 @@ fun getCollectionNamesFromFirestore(
         }
 }
 //ChatGPT modified by me
+//This is UI just for collections. It will be called as many times as there are collections
 @Composable
 fun DisplayCollectionNames(navController: NavHostController) {
     val db = Firebase.firestore
@@ -217,7 +221,7 @@ fun DisplayCollectionNames(navController: NavHostController) {
         modifier = Modifier.padding(16.dp)
     ) {
 
-        // Display collection names on UI cards
+        // Display collection names on UI cards. Since its lazy column, the items functions will be called multiple times
         items(collectionNames) { collectionName ->
 
 
@@ -226,7 +230,6 @@ fun DisplayCollectionNames(navController: NavHostController) {
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 onClick = {
-                    // Handle card click, navigate to collection details or perform other actions
                     navController.navigate(Routes.ItemView.route)
                     assignCollectionName(collectionName)
                 }
@@ -252,13 +255,14 @@ fun DisplayCollectionNames(navController: NavHostController) {
 
         }
     }
-    // Delay and refresh mechanism
+    // Delay so cards will display properly
     LaunchedEffect(Unit) {
         delay(4000) // Adjust the delay duration as needed
         fetchCollectionNames()
     }
 }
 
+//Previews
 @Composable
 fun TestPreview() {
     CollectablesTheme {

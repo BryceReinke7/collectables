@@ -48,11 +48,12 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             CollectablesTheme {
-                 //A surface container using the 'background' color from the theme
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    //This defines paths for pages in app
                     NavHost(navController = navController, startDestination = Routes.Home.route) {
                         composable(Routes.Home.route) { OpeningPage(navController = navController) }
                         composable(Routes.SignUp.route) { SignUp(navController = navController) }
