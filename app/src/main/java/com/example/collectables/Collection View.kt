@@ -187,7 +187,7 @@ fun getCollectionNamesFromFirestore(
 @Composable
 fun DisplayCollectionNames(navController: NavHostController) {
     val db = Firebase.firestore
-    val userId = accessUserName() // Assuming you have a function to retrieve the current user's ID
+    val userId = accessUserName()
 
     // State to hold the collection names
     var collectionNames by remember { mutableStateOf<List<String>>(emptyList()) }

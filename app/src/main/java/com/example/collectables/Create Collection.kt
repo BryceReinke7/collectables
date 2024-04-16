@@ -99,14 +99,13 @@ fun CreateCollectionView(navController: NavHostController, modifier: Modifier = 
                     textAlign = TextAlign.Center
                 )
             }
-
             Spacer(modifier = Modifier.size(10.dp))
             CustomizableInputFields(
                 navController = navController,
                 numberOfFields = numberOfFields,
                 onSave = { values ->
                     savedValues = values
-                    val userId = accessUserName() // Assuming you have a function to retrieve the current user's ID
+                    val userId = accessUserName()
                     val collectionName = name
                     saveToFirestore(
                         db = db,
@@ -114,11 +113,10 @@ fun CreateCollectionView(navController: NavHostController, modifier: Modifier = 
                         collectionName = collectionName,
                         values = values,
                         onSuccess = {
-                            // Handle success, such as showing a toast or navigating to another screen
+
                             Log.d("TAG", "Data saved successfully")
                         },
                         onFailure = { e ->
-                            // Handle failure, such as showing an error message
                             Log.e("TAG", "Failed to save data", e)
                         }
                     )
@@ -135,7 +133,7 @@ fun CreateCollectionView(navController: NavHostController, modifier: Modifier = 
                 ) {
                     Row {
                         Button(
-                            onClick = { numberOfFields ++ },
+                            onClick = { if (numberOfFields < 6) numberOfFields ++ },
                             colors = ButtonDefaults.buttonColors( MaterialTheme.colorScheme.secondary),
                             modifier = Modifier.weight(1f)
                         ) {
@@ -180,14 +178,14 @@ fun CustomizableInputFields(
     ) {
         repeat(numberOfFields) { index ->
             var textValue by remember { mutableStateOf("") }
-
+            var indexPlus by remember { mutableIntStateOf(index+1)}
             TextField(
                 value = textValue,
                 onValueChange = { newText ->
                     textValue = newText
                     textValues.getOrNull(index)?.let { textValues[index] = newText } ?: run { textValues.add(newText) }
                 },
-                label = { Text("Field $index") }
+                label = { Text("Field $indexPlus") }
             )
             Spacer(Modifier.height(8.dp))
         }
@@ -251,11 +249,10 @@ fun saveToFirestore(
         return
     }
 
-    // Saving data under collection rules document
-    val data = hashMapOf<String, Any>()
-    values.forEachIndexed { index, value ->
-        data["Field$index"] = value
-    }
+    // Convert the list of input values to an array
+    val data = hashMapOf(
+        "fields" to values
+    )
 
     db.collection("users")
         .document(userId)
@@ -272,6 +269,7 @@ fun saveToFirestore(
             onFailure(e)
         }
 }
+
 
 
 
