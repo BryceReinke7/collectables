@@ -4,18 +4,23 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +34,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.collectables.ui.theme.CollectablesTheme
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.LaunchedEffect
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
+
 
 //UI for view of items
 @Composable
@@ -83,6 +97,7 @@ fun ItemView(navController: NavHostController, modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .weight(3f)
                 ){
+                    /*
                     Button(
                         onClick = {  },
                         modifier = Modifier
@@ -96,6 +111,8 @@ fun ItemView(navController: NavHostController, modifier: Modifier = Modifier) {
                             textAlign = TextAlign.Center
                         )
                     }
+
+                     */
                 }
             }
             Spacer(modifier = Modifier.size(10.dp))
@@ -130,10 +147,69 @@ fun ItemView(navController: NavHostController, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
+            DisplayDocumentNames(userId =(accessUserName()), collectionName =(accessCollectionName()))
 
         }
     }
 }
+
+// Gets names of users items in collection and displays them on cards
+@Composable
+fun DisplayDocumentNames(
+    userId: String,
+    collectionName: String,
+    modifier: Modifier = Modifier
+) {
+    val db = FirebaseFirestore.getInstance()
+
+    // holds item names
+    var documentNames by remember { mutableStateOf<List<String>>(emptyList()) }
+    //runs a query to grab names
+    LaunchedEffect(userId, collectionName) {
+        try {
+            val querySnapshot = db.collection("users")
+                .document(userId)
+                .collection(collectionName)
+                .get()
+                .await()
+
+            // grab names from query
+            val names = querySnapshot.documents
+                .filter { document -> document.id != "collection_rules" } // Filter out collection rules which holds fields for items in collection
+                .map { document ->
+                    document.id
+                }
+
+            // Update documentNames with item names
+            documentNames = names
+        } catch (e: Exception) {
+            // handles errors
+            e.printStackTrace()
+        }
+    }
+
+
+    // Display items in collection
+    LazyColumn(modifier = modifier.fillMaxWidth()) {
+        items(documentNames) { name ->
+            Card(
+                modifier = Modifier
+                    .padding(vertical = 8.dp, horizontal = 16.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = name,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .wrapContentWidth()
+                )
+            }
+        }
+    }
+}
+
+
+
 
 //Previews
 @Composable

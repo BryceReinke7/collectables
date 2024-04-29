@@ -138,11 +138,10 @@ fun CreateItemView(navController: NavHostController, modifier: Modifier = Modifi
                         itemName = name,
                         fieldValues = fieldValues,
                         onSuccess = {
-                            // Handle success, e.g., navigate to a different screen
                             Log.d("TAG", "Item saved successfully")
+                            navController.popBackStack()
                         },
                         onFailure = { e ->
-                            // Handle failure, e.g., show an error message
                             Log.e("TAG", "Failed to save item", e)
                         }
                     )

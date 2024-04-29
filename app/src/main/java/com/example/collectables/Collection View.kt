@@ -114,6 +114,7 @@ fun CollectView(navController: NavHostController, modifier: Modifier = Modifier)
                     modifier = Modifier
                         .weight(3f)
                 ){
+                    /*
                     Button(
                         onClick = {  },
                         modifier = Modifier
@@ -127,6 +128,7 @@ fun CollectView(navController: NavHostController, modifier: Modifier = Modifier)
                             textAlign = TextAlign.Center
                         )
                     }
+                    */
                 }
             }
             Spacer(modifier = Modifier.size(10.dp))
