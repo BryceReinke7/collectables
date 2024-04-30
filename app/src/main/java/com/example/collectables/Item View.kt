@@ -38,11 +38,22 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.LaunchedEffect
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
+//These three functions are used throughout the app to determine name of current item
+var itemName = ""
+
+fun assignItemName(name: String) {
+    itemName = name
+}
+
+fun accessItemName(): String {
+    return itemName
+}
 
 //UI for view of items
 @Composable
@@ -147,7 +158,7 @@ fun ItemView(navController: NavHostController, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
-            DisplayDocumentNames(userId =(accessUserName()), collectionName =(accessCollectionName()))
+            DisplayDocumentNames(userId =(accessUserName()), collectionName =(accessCollectionName()), navController = navController)
 
         }
     }
@@ -158,7 +169,8 @@ fun ItemView(navController: NavHostController, modifier: Modifier = Modifier) {
 fun DisplayDocumentNames(
     userId: String,
     collectionName: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController
 ) {
     val db = FirebaseFirestore.getInstance()
 
@@ -194,8 +206,13 @@ fun DisplayDocumentNames(
         items(documentNames) { name ->
             Card(
                 modifier = Modifier
-                    .padding(vertical = 8.dp, horizontal = 16.dp)
                     .fillMaxWidth()
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                onClick = {
+                    navController.navigate(Routes.ViewInItem.route)
+                    assignItemName(name)
+                },
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
                 Text(
                     text = name,
@@ -207,8 +224,6 @@ fun DisplayDocumentNames(
         }
     }
 }
-
-
 
 
 //Previews

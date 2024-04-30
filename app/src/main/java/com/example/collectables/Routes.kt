@@ -8,4 +8,5 @@ sealed class Routes (val route: String) {
     object CreateCollection : Routes("createcollect")
     object ItemView : Routes("itemview")
     object CreateItem : Routes("createitem")
+    object ViewInItem : Routes( "viewinitem")
 }

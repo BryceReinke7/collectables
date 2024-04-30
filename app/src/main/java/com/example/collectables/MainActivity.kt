@@ -36,6 +36,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.collectables.ui.theme.ViewInItemView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +63,7 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.CreateCollection.route) { CreateCollectionView(navController = navController) }
                         composable(Routes.ItemView.route) { ItemView(navController = navController)}
                         composable(Routes.CreateItem.route) { CreateItemView(navController = navController) }
+                        composable(Routes.ViewInItem.route) { ViewInItemView(navController = navController) }
                     }
 
                 }
