@@ -197,12 +197,13 @@ fun saveItemToFirestore(
     onFailure: (Exception) -> Unit
 ) {
     // Create a map to hold the item data
-    val itemData = hashMapOf<String, Any>()
+    val itemData = hashMapOf("details" to fieldValues)
 
-    // Add the field values to the item data
+    /* Add the field values to the item data
     for ((index, value) in fieldValues.withIndex()) {
         itemData["field${index + 1}"] = value
     }
+     */
 
     // Add the item data to Firestore with the itemName as document ID
     db.collection("users")

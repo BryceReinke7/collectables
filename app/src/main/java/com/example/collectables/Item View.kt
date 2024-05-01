@@ -108,22 +108,24 @@ fun ItemView(navController: NavHostController, modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .weight(3f)
                 ){
-                    /*
+
                     Button(
-                        onClick = {  },
+                        onClick = {
+                            navController.popBackStack()
+                        },
                         modifier = Modifier
                             .height(64.dp)
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Sort",
+                            text = "Go Back",
                             style = MaterialTheme.typography.displaySmall,
                             modifier = Modifier,
                             textAlign = TextAlign.Center
                         )
                     }
 
-                     */
+
                 }
             }
             Spacer(modifier = Modifier.size(10.dp))
