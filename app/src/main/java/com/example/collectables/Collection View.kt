@@ -114,26 +114,27 @@ fun CollectView(navController: NavHostController, modifier: Modifier = Modifier)
                     modifier = Modifier
                         .weight(3f)
                 ){
-                    /*
+
                     Button(
-                        onClick = {  },
+                        onClick = { navController.popBackStack() },
                         modifier = Modifier
                             .height(64.dp)
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Sort",
+                            text = "Go Back",
                             style = MaterialTheme.typography.displaySmall,
                             modifier = Modifier,
                             textAlign = TextAlign.Center
                         )
                     }
-                    */
+
                 }
             }
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
+            /*
             Row(
                 modifier = Modifier
             ) {
@@ -160,6 +161,7 @@ fun CollectView(navController: NavHostController, modifier: Modifier = Modifier)
                     )
                 }
             }
+             */
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
@@ -259,7 +261,7 @@ fun DisplayCollectionNames(navController: NavHostController) {
     }
     // Delay so cards will display properly
     LaunchedEffect(Unit) {
-        delay(4000) // Adjust the delay duration as needed
+        delay(2000) // Adjust the delay duration as needed
         fetchCollectionNames()
     }
 }

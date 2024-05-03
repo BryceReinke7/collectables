@@ -42,6 +42,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.LaunchedEffect
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
 
 //These three functions are used throughout the app to determine name of current item
@@ -131,6 +132,7 @@ fun ItemView(navController: NavHostController, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
+            /*
             Row(
                 modifier = Modifier
             ) {
@@ -157,6 +159,8 @@ fun ItemView(navController: NavHostController, modifier: Modifier = Modifier) {
                     )
                 }
             }
+
+             */
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
@@ -176,11 +180,14 @@ fun DisplayDocumentNames(
 ) {
     val db = FirebaseFirestore.getInstance()
 
+
+
     // holds item names
     var documentNames by remember { mutableStateOf<List<String>>(emptyList()) }
     //runs a query to grab names
     LaunchedEffect(userId, collectionName) {
         try {
+            delay(1000)
             val querySnapshot = db.collection("users")
                 .document(userId)
                 .collection(collectionName)
