@@ -55,7 +55,9 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.SignUp.route) { SignUp(navController = navController) }
                         composable(Routes.LogIn.route) { LogIn(navController = navController) }
                         composable(Routes.Collections.route) { CollectView(navController = navController) }
-                        composable(Routes.CreateCollection.route) { CreateCollectionView(navController = navController) }
+                        composable(Routes.CreateCollection.route) { CreateCollectionView(
+                            navController = navController
+                        ) }
                         composable(Routes.ItemView.route) { ItemView(navController = navController)}
                         composable(Routes.CreateItem.route) { CreateItemView(navController = navController) }
                         composable(Routes.ViewInItem.route) { ViewInItemView(navController = navController) }
@@ -156,7 +158,7 @@ fun OpeningPage(navController: NavHostController) {
 
 
 
-@Preview()
+@Preview
 @Composable
 fun HomePreview() {
     CollectablesTheme {

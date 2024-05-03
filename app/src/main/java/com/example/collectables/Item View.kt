@@ -50,7 +50,7 @@ fun accessItemName(): String {
 
 //UI for view of items
 @Composable
-fun ItemView(navController: NavHostController, modifier: Modifier = Modifier) {
+fun ItemView(navController: NavHostController) {
     Scaffold(
         topBar = {
             CollectTopBar()

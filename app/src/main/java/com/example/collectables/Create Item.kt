@@ -39,7 +39,7 @@ import com.google.firebase.ktx.Firebase
 
 // UI for page
 @Composable
-fun CreateItemView(navController: NavHostController, modifier: Modifier = Modifier) {
+fun CreateItemView(navController: NavHostController) {
     Scaffold(
         topBar = {
             CollectTopBar()

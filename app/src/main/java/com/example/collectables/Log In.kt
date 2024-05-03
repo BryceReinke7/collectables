@@ -34,7 +34,6 @@ fun loginUser(navController: NavHostController, email: String, password: String)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Login successful
-                val user = auth.currentUser
                 Log.d("Login", "signInWithEmail:success")
 
                 navController.navigate(Routes.Collections.route)
@@ -57,7 +56,7 @@ fun accessUserName(): String {
 
 //UI for login page
 @Composable
-fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
+fun LogIn(navController: NavHostController) {
     Scaffold(
         topBar = {
             CollectTopBar()
@@ -72,8 +71,7 @@ fun LogIn(navController: NavHostController, modifier: Modifier = Modifier) {
         ) {
             var email by remember { mutableStateOf("") }
             var password by remember { mutableStateOf("") }
-            Column(
-            ) {
+            Column{
                 Column (
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,

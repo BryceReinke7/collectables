@@ -52,7 +52,7 @@ fun registerUser(navController: NavHostController, email: String, password: Stri
 
 //UI for sign up page
 @Composable
-fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
+fun SignUp(navController: NavHostController) {
     Scaffold(
         topBar = {
             CollectTopBar()
@@ -68,8 +68,7 @@ fun SignUp(navController: NavHostController, modifier: Modifier = Modifier) {
             var email by remember { mutableStateOf("") }
             var password by remember { mutableStateOf("") }
 
-            Column(
-            ) {
+            Column{
                 Column (
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,

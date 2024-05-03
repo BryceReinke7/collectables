@@ -37,7 +37,7 @@ import com.google.firebase.ktx.Firebase
 
 //UI for view of collections
 @Composable
-fun CreateCollectionView(navController: NavHostController, modifier: Modifier = Modifier) {
+fun CreateCollectionView(navController: NavHostController) {
     Scaffold(
         topBar = {
             CollectTopBar()
@@ -45,7 +45,7 @@ fun CreateCollectionView(navController: NavHostController, modifier: Modifier = 
     ) { innerPadding ->
         val db = Firebase.firestore
         //number of input fields
-        var numberOfFields by remember { mutableStateOf(1) }
+        var numberOfFields by remember { mutableIntStateOf(1) }
         //what gets saved into firestore
         var savedValues by remember { mutableStateOf<List<String>>(emptyList()) }
         //variable for input field
@@ -88,6 +88,7 @@ fun CreateCollectionView(navController: NavHostController, modifier: Modifier = 
                 }
             }
             Spacer(modifier = Modifier.size(10.dp))
+            /*
             Button(
                 onClick = {  },
                 colors = ButtonDefaults.buttonColors( MaterialTheme.colorScheme.secondary),
@@ -100,6 +101,8 @@ fun CreateCollectionView(navController: NavHostController, modifier: Modifier = 
                     textAlign = TextAlign.Center
                 )
             }
+
+             */
             Spacer(modifier = Modifier.size(10.dp))
             CustomizableInputFields(
                 navController = navController,
@@ -192,7 +195,7 @@ fun CustomizableInputFields(
     ) {
         repeat(numberOfFields) { index ->
             var textValue by remember { mutableStateOf("") }
-            var indexPlus by remember { mutableIntStateOf(index+1)}
+            val indexPlus by remember { mutableIntStateOf(index+1)}
             TextField(
                 value = textValue,
                 onValueChange = { newText ->
@@ -223,7 +226,7 @@ fun CustomizableInputFields(
     }
 }
 
-//Also from chaptgpt modified by me
+//Also from chatgpt modified by me
 //Sets up save for collection to firestore
 fun saveCollectionToFirestore(
     db: FirebaseFirestore,

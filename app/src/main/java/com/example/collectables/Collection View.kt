@@ -55,7 +55,7 @@ fun accessCollectionName(): String {
 
 //UI for view of all collections a user has
 @Composable
-fun CollectView(navController: NavHostController, modifier: Modifier = Modifier) {
+fun CollectView(navController: NavHostController) {
     Scaffold(
         topBar = {
             CollectTopBar()
@@ -229,7 +229,7 @@ fun DisplayCollectionNames(navController: NavHostController) {
                     assignCollectionName(collectionName)
                 }
             ) {
-                Row() {
+                Row {
                     Image(
                         //Icon from FreePik.com made by Vitaly Gorbachev
                         painter = painterResource(id = R.drawable.box_icon),
