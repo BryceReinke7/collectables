@@ -1,8 +1,6 @@
 package com.example.collectables
 
-import android.content.ContentValues.TAG
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,17 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ComponentActivity
 import androidx.navigation.NavHostController
-import com.example.collectables.ui.theme.CollectablesTheme
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 
 
 //set up user registration
@@ -48,7 +38,7 @@ fun registerUser(navController: NavHostController, email: String, password: Stri
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Registration successful
-                val user = auth.currentUser
+                //val user = auth.currentUser
                 navController.navigate(Routes.LogIn.route)
             } else {
                 // Registration failed

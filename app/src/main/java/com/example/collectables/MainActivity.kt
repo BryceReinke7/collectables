@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 //Top bar of app
-fun CollectTopBar(modifier: Modifier = Modifier) {
+fun CollectTopBar() {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceTint,
@@ -95,7 +95,7 @@ fun CollectTopBar(modifier: Modifier = Modifier) {
 
 @Composable
 //Sets up opening page
-fun OpeningPage(navController: NavHostController, modifier: Modifier = Modifier) {
+fun OpeningPage(navController: NavHostController) {
     Scaffold(
         topBar = {
             CollectTopBar()
