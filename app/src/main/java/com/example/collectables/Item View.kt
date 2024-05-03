@@ -55,7 +55,6 @@ fun ItemView(navController: NavHostController) {
         topBar = {
             CollectTopBar()
         }
-
     ) { innerPadding ->
 
         Column(modifier = Modifier.padding(innerPadding)) {
@@ -124,6 +123,7 @@ fun ItemView(navController: NavHostController) {
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
+            //Search bar not added
             /*
             Row(
                 modifier = Modifier

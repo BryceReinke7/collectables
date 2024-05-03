@@ -88,6 +88,7 @@ fun CreateCollectionView(navController: NavHostController) {
                 }
             }
             Spacer(modifier = Modifier.size(10.dp))
+            //Add image not working
             /*
             Button(
                 onClick = {  },
@@ -101,7 +102,6 @@ fun CreateCollectionView(navController: NavHostController) {
                     textAlign = TextAlign.Center
                 )
             }
-
              */
             Spacer(modifier = Modifier.size(10.dp))
             CustomizableInputFields(

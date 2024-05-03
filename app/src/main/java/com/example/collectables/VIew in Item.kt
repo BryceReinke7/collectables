@@ -43,6 +43,7 @@ fun ViewInItemView(navController: NavHostController, modifier: Modifier = Modifi
         }
     ) { innerPadding ->
 
+        //Firebase variables
         val db = Firebase.firestore
         val userId = accessUserName()
         val collectionName = accessCollectionName()
@@ -115,6 +116,7 @@ fun ViewInItemView(navController: NavHostController, modifier: Modifier = Modifi
             }
 
             Spacer(modifier = Modifier.size(10.dp))
+            //Goes through all fields and creates text for each
             collectionRules.forEachIndexed { index, rule ->
                 Text(
                     text = rule,
@@ -150,6 +152,7 @@ fun ViewInItemView(navController: NavHostController, modifier: Modifier = Modifi
     }
 }
 
+//Fetches data from firestore
 fun getCollectionItemsFromFirestore(
     db: FirebaseFirestore,
     userId: String,

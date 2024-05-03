@@ -125,6 +125,7 @@ fun CollectView(navController: NavHostController) {
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
+            //Searchbar didn't get added
             /*
             Row(
                 modifier = Modifier
@@ -156,7 +157,6 @@ fun CollectView(navController: NavHostController) {
             Spacer(modifier = Modifier.size(10.dp))
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.size(10.dp))
-            //Put collections here
             DisplayCollectionNames(navController = navController)
         }
     }
@@ -188,7 +188,7 @@ fun DisplayCollectionNames(navController: NavHostController) {
     val db = Firebase.firestore
     val userId = accessUserName()
 
-    // State to hold the collection names
+    // Holds collection names
     var collectionNames by remember { mutableStateOf<List<String>>(emptyList()) }
 
     // Function to fetch collection names from Firestore
@@ -216,7 +216,7 @@ fun DisplayCollectionNames(navController: NavHostController) {
         modifier = Modifier.padding(16.dp)
     ) {
 
-        // Display collection names on UI cards. Since its lazy column, the items functions will be called multiple times
+        // Iterates over collection names in scrollable column
         items(collectionNames) { collectionName ->
 
 
@@ -252,7 +252,7 @@ fun DisplayCollectionNames(navController: NavHostController) {
     }
     // Delay so cards will display properly
     LaunchedEffect(Unit) {
-        delay(2000) // Adjust the delay duration as needed
+        delay(2000)
         fetchCollectionNames()
     }
 }

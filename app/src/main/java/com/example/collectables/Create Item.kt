@@ -98,6 +98,7 @@ fun CreateItemView(navController: NavHostController) {
                 }
             }
             Spacer(modifier = Modifier.size(10.dp))
+            //Add image not working
             /*
             Button(
                 onClick = { Log.d("TAG", "TESTING $collectionRules") },
@@ -174,7 +175,6 @@ fun CreateItemView(navController: NavHostController) {
 }
 
 //Grabs data from firestore
-//ChatGPT with modifications from me
 fun getCollectionRulesFromFirestore(
     db: FirebaseFirestore,
     userId: String,
@@ -212,12 +212,6 @@ fun saveItemToFirestore(
 ) {
     // Create a map to hold the item data
     val itemData = hashMapOf("details" to fieldValues)
-
-    /* Add the field values to the item data
-    for ((index, value) in fieldValues.withIndex()) {
-        itemData["field${index + 1}"] = value
-    }
-     */
 
     // Add the item data to Firestore with the itemName as document ID
     db.collection("users")

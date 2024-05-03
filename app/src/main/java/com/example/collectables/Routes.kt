@@ -1,5 +1,6 @@
 package com.example.collectables
 
+// Nav routes
 sealed class Routes (val route: String) {
     data object Home : Routes("home")
     data object SignUp : Routes("signup")
